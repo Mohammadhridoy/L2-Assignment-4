@@ -7,7 +7,7 @@ import { userValidation } from "./user.validation";
 
 const userRouter = Router()
 
-router.post('/create-admin', validateRequst(userValidation.createUserValidationSchema), userController.createAdmin)
+userRouter.post('/create-admin', validateRequst(userValidation.createUserValidationSchema), userController.createAdmin)
 
 
 export default userRouter; 
