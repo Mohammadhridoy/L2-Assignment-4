@@ -7,6 +7,8 @@ import { StatusCodes } from "http-status-codes";
 
 
 const createBlog = catchAsync(async(req:Request, res: Response) =>{
+    
+
     const result = await blogServices.createBlogIntoDB(req.body)
 
     sendResponse(res, {

@@ -11,4 +11,6 @@ import jwt from 'jsonwebtoken'
         })
     }
 
-    export default createToken
+   
+
+    export default  createToken; 

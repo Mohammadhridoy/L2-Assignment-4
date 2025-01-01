@@ -3,6 +3,7 @@ import { Iblog } from "./blog.interface";
 
 
 
+
 const blogSchema = new Schema<Iblog>({
     title:{
         type:String,
@@ -13,17 +14,21 @@ const blogSchema = new Schema<Iblog>({
     },
     author:{
         type: Schema.Types.ObjectId,
-        ref: 'author'
+        ref:"User"
     },
     isPublished:{
         type: Boolean,
         default: true
-    }
+    },
+    
 },
 {
     timestamps: true
 }
 )
+
+
+
 
 
 export const Blog = model<Iblog>("Blog", blogSchema)
