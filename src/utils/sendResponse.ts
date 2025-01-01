@@ -6,7 +6,7 @@ type TsuccessResponse<T> ={
     statusCode: number,
     message: string,
     token?:string,
-    data: T | T[]| null
+    data?: T | T[]| null
 }
 
 

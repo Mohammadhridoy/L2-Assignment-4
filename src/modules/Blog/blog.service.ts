@@ -46,9 +46,44 @@ const deleteBlogIntoDB = async(id:string) =>{
 }
 
 // get all blogs from database
-const getAllBlogsfromDB = async() =>{
-    const result = await Blog.find().populate('author')
-    return result
+const getAllBlogsfromDB = async(query: Record<string, unknown>) =>{
+
+    const queryObj = {...query} 
+
+     // search element ... 
+    let searchText = ' '
+    if(query?.search){
+        searchText= query?.search as string
+    }
+    
+    
+    const searchElement = ['title', 'content']
+
+    const searchQuery = Blog.find({
+        $or: searchElement.map((field)=>({
+            [field]:{$regex: searchText, $options:"i"}
+        })
+            
+        )
+    }) 
+
+
+    // ** filtering ***
+   // object copy 
+
+    const  excludeFields = ['search', 'sortBy', 'sortOrder']
+    excludeFields.forEach(el=> delete queryObj[el]) 
+        
+    const authorId = queryObj.filter
+        const filterQuery =  searchQuery.find({author: authorId}).populate('author')
+
+    // sorting implementation 
+    const sortBy = (query?.sortBy as string) || 'createdAt'
+    const sortOrder = query?.sortOrder === 'asc'? 1: -1
+
+    const sortQuery = await filterQuery.sort({[sortBy]:sortOrder})
+
+    return sortQuery
 }
 
 
