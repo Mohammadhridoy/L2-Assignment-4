@@ -2,7 +2,7 @@ import { z } from "zod";
 
 
 
-const  createBlogValidaton = z.object({
+const  createBlogValidation = z.object({
     body:z.object({
             title: z.string(),
             content:z.string(),
@@ -14,7 +14,20 @@ const  createBlogValidaton = z.object({
 
 })
 
+const updateBlogvalidation = z.object({
+    body:z.object({
+        title:z.string({
+            invalid_type_error: 'Title must be string',
+            required_error:'Title is requred'
+        }),
+        content:z.string(),
+
+    })
+})
+
+
 
 export const blogValidation = {
-    createBlogValidaton
+    createBlogValidation,
+    updateBlogvalidation
 }

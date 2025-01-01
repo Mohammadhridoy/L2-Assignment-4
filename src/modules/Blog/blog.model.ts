@@ -29,6 +29,4 @@ const blogSchema = new Schema<Iblog>({
 
 
 
-
-
 export const Blog = model<Iblog>("Blog", blogSchema)
