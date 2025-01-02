@@ -9,7 +9,9 @@ import auth from "../../Middlewares/auth";
 const blogRouter = Router()
 
 
-blogRouter.post('/blogs', auth('user'), validateRequst(blogValidation.createBlogValidation), blogController.createBlog)
+blogRouter.post('/blogs', auth('user'),
+ validateRequst(blogValidation.createBlogValidation), 
+ blogController.createBlog)
 blogRouter.get("/blogs", blogController.getAllblogs )
 blogRouter.patch('/blogs/:id', auth('user'), validateRequst(blogValidation.updateBlogvalidation), blogController.updateBlog )
 blogRouter.delete('/blogs/:id', auth('user'), blogController.deleteBlog  )

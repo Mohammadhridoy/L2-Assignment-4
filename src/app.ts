@@ -3,9 +3,10 @@ import cors from 'cors'
 import userRouter from './modules/users/user.router'
 import authRouter from './modules/auth/auth.router'
 import blogRouter from './modules/Blog/blog.router'
-import adminRouter from './modules/Admin/Admin.router'
 import { StatusCodes } from 'http-status-codes'
-import globalErrorHandler from './Middlewares/globalErrorHandlers'
+import adminRouter from './modules/Admin/admin.router'
+import globalErrorHandler from './Middlewares/globalErrorHandler'
+
 
 const app:Application = express()
 
