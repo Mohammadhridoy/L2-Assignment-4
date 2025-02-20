@@ -10,17 +10,19 @@ const createUserValidationSchema = z.object({
     })
 })
 
-// const updateUserValidationSchema = z.object({
-//     body:z.object({
-//         name: z.string().optional(),
-//         email: z.string().email().optional(),
-//         password: z.string().optional(),
-//         role : z.enum(['admin', 'user']).optional(),
-//         isBlocked: z.boolean().optional(), 
-//     })
-// })
+
+const loginValidaton = z.object({
+    body: z.object({
+        email:z.string({
+            required_error: "Email must be provided and must be a string"
+        }).email(),
+        password:z.string({required_error: "Password is required"})
+    })
+})
+
 
 
 export const userValidation = {
     createUserValidationSchema,
+    loginValidaton
 }

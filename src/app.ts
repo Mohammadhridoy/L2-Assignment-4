@@ -1,11 +1,11 @@
 import express, { Application, Request, Response } from 'express'
 import cors from 'cors'
 import userRouter from './modules/users/user.router'
-import authRouter from './modules/auth/auth.router'
-import blogRouter from './modules/Blog/blog.router'
 import { StatusCodes } from 'http-status-codes'
 import adminRouter from './modules/Admin/admin.router'
 import globalErrorHandler from './Middlewares/globalErrorHandler'
+import { carRoutes } from './modules/cars/car.route'
+import { orderRouter } from './modules/orders/order.route'
 
 
 const app:Application = express()
@@ -16,16 +16,16 @@ const app:Application = express()
 app.use(express.json())
 app.use(cors())
 
-app.use('/api/user', userRouter)
-app.use('/api/auth',  authRouter)
-app.use('/api', blogRouter)
+app.use('/api/auth', userRouter)
+app.use('/api', carRoutes)
+app.use('/api', orderRouter)
 app.use('/api/admin', adminRouter)
 
 
 
 
 app.get('/', (req: Request, res: Response)=>{
-    res.send("server is running!")
+    res.send("CarBackend server is running!")
 })
 
 //  Global error handler 

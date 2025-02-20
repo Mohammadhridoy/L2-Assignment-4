@@ -28,7 +28,7 @@ const userSchema = new Schema<IUser>({
         type: String, 
         required: true,
         select:0
-    },
+    }, 
     role:{
         type: String,
         enum:{
