@@ -1,4 +1,4 @@
-import { Blog } from "../Blog/blog.model";
+
 import { User } from "../users/user.model";
 
 
@@ -14,15 +14,8 @@ const updateUserStatusIntoDB = async(id:string)=>{
     
 }
 
-const deleteBlogAdminfromDB = async(id:string) =>{
-
-    const result = await Blog.findByIdAndDelete(id)
-
-    return result 
-}
 
 
 export const adminService = {
     updateUserStatusIntoDB,
-    deleteBlogAdminfromDB
 }

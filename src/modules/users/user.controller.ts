@@ -29,13 +29,16 @@ const login = catchAsync(async (req: Request, res:Response)=>{
    
     const result = await userService.loginIntoDB(req.body)
 
+    const {refreshToken, accessToken} = result
+
+    res.cookie("refreshToken", refreshToken)
     
 sendResponse(res, {
     statusCode: StatusCodes.OK,
     status:true,
     message: "Login successful",
     data: {
-        token: result
+        accessToken: accessToken
     }
 })
 

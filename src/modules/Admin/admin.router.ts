@@ -10,7 +10,7 @@ adminRouter.patch('/users/:userId/block', auth('admin'),
     adminController.updateUserStatusByAdmin
 )
 
-adminRouter.delete('/blogs/:id', auth('admin') , adminController.deleteBlogByAdmin   )
+
 
 
 export default adminRouter;

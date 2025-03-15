@@ -56,7 +56,14 @@ const loginIntoDB = async(payload:Tpayload)=>{
           config.jwt_access_expires_in as string
     )
 
-    return accessToken 
+    const refreshToken = createToken(jwtpayload, config.jwt_refresh_secret as string, config.jwt_refresh_expires_in as string)
+
+
+
+    return {
+        accessToken,
+        refreshToken
+    } 
 
    
 

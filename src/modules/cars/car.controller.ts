@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import carValidationSchema from "./car.validation";
 import { carServices } from "./car.service";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { StatusCodes } from "http-status-codes";
 
 
 const createCar = async (req: Request, res: Response) =>{
@@ -26,28 +29,44 @@ const createCar = async (req: Request, res: Response) =>{
 }
 
 
-const getAllCarsInfo = async (req:Request , res:Response ) =>{
-    try{
+// const getAllCarsInfo = async (req:Request , res:Response ) =>{
+//     try{
        
-        const queryValue  =req.query 
+//         const queryValue  =req.query 
 
-        const result = await carServices.getAllCarsInfoFromDB(queryValue)
+//         const result = await carServices.getAllCarsInfoFromDB(queryValue)
 
-        res.status(200).json({
-            message:'Cars retrieved successfully',
-            status:true,
-            data: result,
+//         res.status(200).json({
+//             message:'Cars retrieved successfully',
+//             status:true,
+//             data: result,
+//         })
+
+//     }catch(err:any){
+//         res.status(500).json({
+//             success:false, 
+//             message: err.message|| 'Something went wrong',
+//             error: err, 
+//         })
+
+//     }
+// }
+
+const getAllCarsInfo = catchAsync(async (req:Request , res:Response ) =>{
+       
+        // const queryValue  =req.query 
+
+        const result = await carServices.getAllCarsInfoFromDB(req.query)
+
+        sendResponse(res, {
+            statusCode:StatusCodes.OK,
+            status: true,
+            message: "Cars retrieved successfully",
+            data: result
         })
 
-    }catch(err:any){
-        res.status(500).json({
-            success:false, 
-            message: err.message|| 'Something went wrong',
-            error: err, 
-        })
+})
 
-    }
-}
 
 const getOneCarInfo = async(req: Request, res: Response) =>{
     try{
@@ -66,6 +85,7 @@ const getOneCarInfo = async(req: Request, res: Response) =>{
         })
     }
 }
+
 
 const updatedCarInfo = async(req: Request, res:Response) =>{
     try{

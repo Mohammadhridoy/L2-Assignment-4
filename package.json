@@ -1,7 +1,6 @@
 {
-  "name": "assignment-3",
+  "name": "car-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
@@ -27,5 +26,6 @@
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "typescript": "^5.7.2"
-  }
+  },
+  "description": ""
 }
