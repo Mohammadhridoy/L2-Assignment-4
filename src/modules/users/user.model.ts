@@ -40,6 +40,10 @@ const userSchema = new Schema<IUser>({
     isBlocked:{
         type: Boolean,
         default: false
+    },
+    needPasswordChange:{
+        type: Boolean,
+        default: false
     }
 
 },{

@@ -7,6 +7,7 @@ const createUserValidationSchema = z.object({
         password: z.string(),
         role : z.enum(['admin', 'user']).optional(),
         isBlocked: z.boolean().optional(), 
+        needPasswordChange: z.boolean().optional()
     })
 })
 
