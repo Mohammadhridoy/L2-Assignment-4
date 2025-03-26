@@ -9,6 +9,8 @@ export type Car ={
     category: "Sedan" | "SUV" | "Truck" | "Coupe" | "Convertible",
     description: string,
     quantity:number,
-    inStock: boolean, 
+    inStock: boolean,
+    image:string,
+    carName:string 
 
 }

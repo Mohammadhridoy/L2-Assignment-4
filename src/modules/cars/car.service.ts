@@ -14,7 +14,7 @@ const createCarIntoDB = async (cardata: Car ) =>{
 
 const getAllCarsInfoFromDB = async (query: Record <string, unknown>) =>{
 
-    console.log(query);
+//    console.log(query);
 
 
     const searchField = ["brand", "model", "category"]

@@ -20,7 +20,8 @@ const CarSchema = new Schema<Car>({
     description:{type:String},
     quantity: { type:Number, required:[true, 'Give product quantity'] },
     inStock:{ type: Boolean, required:[true, 'Stock is empty'] },
-  
+    image: {type:String, required:[true, 'Give car images!']},
+    carName: {type:String, required:[true, "Give car  name"]}
     
 },
 {

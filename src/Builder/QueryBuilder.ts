@@ -39,11 +39,13 @@ class QueryBuilder<T> {
     price(){
         
         if(this?.query?.price){
-
-            const field = (this?.query?.price as string).split('-').map(Number)
-            console.log(field[0]) 
+            
+            const value = (this?.query?.price as string).split('-')
+            
+            const field = value.map(Number)
+           
         
-        
+            
         
         this.modelQuery = this.modelQuery.find({
             price:{$gte:field[0] , $lte:field[1]}

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {  z } from "zod";
 
 
 const carValidationSchema = z.object({
@@ -10,7 +10,10 @@ const carValidationSchema = z.object({
     description: z.string(),
     quantity: z.number(),
     inStock: z.boolean(),
-    isDeleted: z.boolean().optional()
+    isDeleted: z.boolean().optional(),
+    image:z.string(),
+    carName:z.string()
+    
 
 })
 
