@@ -54,7 +54,7 @@ const createCar = async (req: Request, res: Response) =>{
 
 const getAllCarsInfo = catchAsync(async (req:Request , res:Response ) =>{
        
-        // const queryValue  =req.query 
+        
 
         const result = await carServices.getAllCarsInfoFromDB(req.query)
 

@@ -3,7 +3,7 @@
 
 export type Order ={
     email: string,
-    car: string,
+    carId: string,
     quantity: number,
     totalPrice:number
 }
