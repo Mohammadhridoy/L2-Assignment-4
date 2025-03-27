@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import orderValidationSchema from "./order.validation";
 import { orderService } from "./order.service";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { StatusCodes } from "http-status-codes";
 
 
 
@@ -50,9 +53,35 @@ const getOrderRevenue = async (req: Request, res: Response) =>{
     }
 }
 
+// verifypayment 
+const verifyPayment = catchAsync(async(req, res)=>{
+    const order = await orderService.verifyPayment(req.query.order_id as string)
+
+    sendResponse(res, {
+        statusCode:StatusCodes.CREATED,
+        message:"Order verified successfully",
+        data: order,
+    })
+
+})
+
+
+// get All order info........
+const getAllOrder = catchAsync(async(req, res)=>{
+    const allOrderData = await orderService.getAllOrderDatafromBD()
+
+    sendResponse(res, {
+        statusCode:StatusCodes.CREATED,
+        message:"Order verified successfully",
+        data: allOrderData ,
+    })
+
+})
 
 
 export const orderControllers ={
     createOrder,
-    getOrderRevenue
+    getOrderRevenue,
+    verifyPayment,
+    getAllOrder
 }

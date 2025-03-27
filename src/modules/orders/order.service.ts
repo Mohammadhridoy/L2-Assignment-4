@@ -60,12 +60,12 @@ const createOrderIntoDB = async(orderData: Order, client_ip:string) =>{
      
 
 
-    const result = (await OrderModel.create(orderData))
+    let  order = (await OrderModel.create(orderData))
 
 
     const shurjopayPayload = {
         amount: totalprice,
-        order_id: result._id,
+        order_id: order._id,
         currency:"BDT",
         customer_name: user?.name,
         customer_address:"N/A",
@@ -78,8 +78,49 @@ const createOrderIntoDB = async(orderData: Order, client_ip:string) =>{
 
     const payment = await orderUtils.makePaymentAsync(shurjopayPayload)
 
-    console.log(payment);
-    return {result, payment};
+    if(payment.transactionStatus){
+       order = await  order.updateOne({
+            transaction:{
+                id:payment.sp_order_id,
+                transactionStatus:payment.transactionStatus
+            }
+        })
+    }
+
+
+    
+    return payment.checkout_url;
+
+}
+
+   
+// verifypayment////////
+const verifyPayment = async(order_id:string) =>{
+    const verifyPayment =await orderUtils.verifyPaymentAsync(order_id)
+    
+    if(verifyPayment.length){
+        await OrderModel.findOneAndUpdate({
+            "transaction.id": order_id
+        },{
+            "transaction.bank_status":verifyPayment[0].bank_status,
+            "transaction.sp_code":verifyPayment[0].sp_code,
+            "transaction.sp_message,":verifyPayment[0].sp_message,
+            "transaction.transactionStatus":verifyPayment[0].transaction_status,
+            "transaction.method":verifyPayment[0].method,
+            "transaction.date_time":verifyPayment[0].date_time,
+            status: verifyPayment[0].bank_status == "Success"?"Paid":
+            verifyPayment[0].bank_status == "Failed"? "Pending"
+            :verifyPayment[0].bank_status =="Cancel"?"Cancelled":""            
+        })
+    }
+
+    return verifyPayment
+}
+
+
+const getAllOrderDatafromBD = async() =>{
+    const getAllorder = await OrderModel.find()
+    return getAllorder
 }
 
 
@@ -107,5 +148,7 @@ const getOrderRevenueFromDB = async() =>{
 
 export const orderService = {
     createOrderIntoDB,
-    getOrderRevenueFromDB
+    getOrderRevenueFromDB,
+    verifyPayment,
+    getAllOrderDatafromBD
 }
