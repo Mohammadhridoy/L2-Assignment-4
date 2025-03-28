@@ -71,8 +71,23 @@ const loginIntoDB = async(payload:Tpayload)=>{
 }
 
 
+const getAllUserFrom = async() =>{
+    const allUsers = await User.find({role:{$ne:"admin"}}) 
+    return allUsers
+}
+
+
+const getSingleUserFromBd = async(email:string) =>{
+    const oneUser = await User.findOne({email})
+
+    return oneUser
+}
+
+
 
 export const userService = {
     registerIntoDB,
-    loginIntoDB
+    loginIntoDB,
+    getAllUserFrom,
+    getSingleUserFromBd
 }

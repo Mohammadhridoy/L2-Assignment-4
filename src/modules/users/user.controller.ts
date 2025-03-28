@@ -45,10 +45,36 @@ sendResponse(res, {
 })
 
 
+const allUsers = catchAsync(async(req:Request, res:Response)=>{
+    const result = await userService.getAllUserFrom()
+
+    sendResponse(res,{
+        statusCode: StatusCodes.OK,
+        status:true,
+        message:"All users retrieved successfully",
+        data: result
+    })
+})
+
+
+const getSingleUser = catchAsync(async(req:Request, res:Response)=>{
+    const result = await userService.getSingleUserFromBd(req.params.email)
+
+    sendResponse(res,{
+        statusCode:StatusCodes.OK,
+        status:true,
+        message:"One user retrived successfully",
+        data:result
+    })
+})
+
+
 
 
 
 export const userController = {
     register,
-    login
+    login,
+    allUsers,
+    getSingleUser
 }
