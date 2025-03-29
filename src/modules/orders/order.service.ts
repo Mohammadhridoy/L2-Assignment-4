@@ -1,5 +1,7 @@
 
+import { JwtPayload } from "jsonwebtoken";
 import { CarModel } from "../cars/car.model";
+import { IUser } from "../users/user.interface";
 import { User } from "../users/user.model";
 import { Order } from "./order.interface";
 import { OrderModel } from "./order.model";
@@ -7,7 +9,7 @@ import { orderUtils } from "./order.utils";
 
 
 
-const createOrderIntoDB = async(orderData: Order, client_ip:string) =>{
+const createOrderIntoDB = async(orderData: Order,  client_ip:string) =>{
 
     
    
@@ -52,7 +54,7 @@ const createOrderIntoDB = async(orderData: Order, client_ip:string) =>{
 
         let totalprice = orderData.totalPrice
         totalprice*=orderData.quantity
-        // console.log("dddd",totalprice);
+    
 
         const email = orderData?.email
         const user = await User.findOne({email})
@@ -113,6 +115,7 @@ const verifyPayment = async(order_id:string) =>{
             :verifyPayment[0].bank_status =="Cancel"?"Cancelled":""            
         })
     }
+   
 
     return verifyPayment
 }
