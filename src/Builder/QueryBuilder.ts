@@ -43,8 +43,6 @@ class QueryBuilder<T> {
             const value = (this?.query?.price as string).split('-')
             
             const field = value.map(Number)
-           
-        
             
         
         this.modelQuery = this.modelQuery.find({

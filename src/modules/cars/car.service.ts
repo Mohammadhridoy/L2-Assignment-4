@@ -24,7 +24,7 @@ const getAllCarsInfoFromDB = async (query: Record <string, unknown>) =>{
     .search(searchField).filter().price()
 
     const result = await carQuery.modelQuery
-    
+   
     return result; 
 }
 
