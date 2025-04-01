@@ -72,7 +72,7 @@ const getAllOrder = catchAsync(async(req, res)=>{
     const allOrderData = await orderService.getAllOrderDatafromBD()
 
     sendResponse(res, {
-        statusCode:StatusCodes.CREATED,
+        statusCode:StatusCodes.OK,
         message:"Order verified successfully",
         data: allOrderData ,
     })
@@ -80,9 +80,24 @@ const getAllOrder = catchAsync(async(req, res)=>{
 })
 
 
+// get single user All Order info
+const getSingleUserAllOrderInfo = catchAsync(async(req, res)=>{
+    
+    const email = req.params.email
+    const userAllorderInfo = await orderService.getSingleUserAllOrdes(email)
+
+    sendResponse(res,{
+        statusCode:StatusCodes.OK,
+        message:"Order get successfully",
+        data: userAllorderInfo
+    })
+})
+
+
 export const orderControllers ={
     createOrder,
     getOrderRevenue,
     verifyPayment,
-    getAllOrder
+    getAllOrder,
+    getSingleUserAllOrderInfo
 }

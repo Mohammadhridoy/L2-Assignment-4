@@ -68,7 +68,38 @@ const getSingleUser = catchAsync(async(req:Request, res:Response)=>{
     })
 })
 
+const changePassword = catchAsync(async(req:Request, res:Response)=>{
+    const user = req.user
+    
+    const {...password} = req.body
+   
 
+    const result = await userService.changePasswordIntoBd(req?.user, password)
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        status:true,
+        message:"Password change successful",
+        data: result
+    })
+
+})
+
+
+const isBlockedUser = catchAsync(async(req:Request, res:Response)=>{
+    const id =  req.body.userId
+    
+
+    const result = await userService.isblockedfromBD(id)
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        status:true, 
+        message:"User is blocked",
+        data: null
+    })
+
+})
 
 
 
@@ -76,5 +107,7 @@ export const userController = {
     register,
     login,
     allUsers,
-    getSingleUser
+    getSingleUser,
+    changePassword,
+    isBlockedUser
 }

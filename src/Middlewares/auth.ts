@@ -13,7 +13,7 @@ const auth = (...requiredRoles: TUserRole[]) =>{
      return catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
             const token = req.headers.authorization
           
-            
+           console.log(token);
 
             if(!token){
                 throw new AppError(StatusCodes.UNAUTHORIZED, "you are not authorized!")
@@ -31,7 +31,7 @@ const auth = (...requiredRoles: TUserRole[]) =>{
             const user = await User.findOne({email})
 
             
-
+            console.log(user);
           
 
             if(!user){

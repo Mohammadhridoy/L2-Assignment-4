@@ -44,6 +44,9 @@ const userSchema = new Schema<IUser>({
     needPasswordChange:{
         type: Boolean,
         default: false
+    },
+    passwordChangedAt:{
+        type: Date
     }
 
 },{

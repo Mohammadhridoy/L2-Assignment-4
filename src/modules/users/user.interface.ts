@@ -8,7 +8,8 @@ export interface IUser {
     password: string,
     role: "admin" | "user",
     isBlocked: boolean, 
-    needPasswordChange: boolean
+    needPasswordChange: boolean,
+    passwordChangedAt?:Date
 }
 
 export type TUserRole = keyof typeof User_Role;

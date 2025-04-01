@@ -5,6 +5,7 @@ import { User } from "./user.model";
 import bcrypt from "bcrypt"
 import createToken from "../../utils/auth.utils";
 import config from "../../config";
+import { JwtPayload } from "jsonwebtoken";
 
 
 
@@ -83,11 +84,79 @@ const getSingleUserFromBd = async(email:string) =>{
     return oneUser
 }
 
+// change password
+
+type TuserPayload = {
+    oldpassword:string,
+    newPassword: string
+}
+
+const changePasswordIntoBd = async(userData:JwtPayload| undefined, payload:TuserPayload)=>{
+   
+
+    const user = await User.findOne({ email: userData?.email}).select("+password")
+
+    if(!user){
+        throw new AppError(StatusCodes.NOT_FOUND, "This user is not found")
+    }
+
+    // if user is blocked 
+    const isBlocked = user?.isBlocked
+    if(isBlocked){
+        throw new AppError(StatusCodes.FORBIDDEN, 'This user is blocked!')
+    }
+
+    // checking if the password is correct
+    const isPasswordMatched = await bcrypt.compare(
+        payload?.oldpassword,
+        user?.password
+    )
+    if(!isPasswordMatched){
+        throw new AppError(StatusCodes.FORBIDDEN, 'Password do not matched!')
+    }
+
+
+    const newHashpassword = await bcrypt.hash(
+        payload.newPassword,
+        Number(config.bcrypt_salt_round)
+    )
+
+    await User.findOneAndUpdate(
+        {
+            _id:user?._id,
+            role: user?.role
+        },
+        {
+            password: newHashpassword,
+            needPasswordChange: true,
+            passwordChangedAt: new Date()
+        }
+    )
+
+    return null
+
+
+    
+    
+}
+
+
+// user isblocked
+const isblockedfromBD = async(userId:string)=>{
+    
+    const result = await User.findOneAndUpdate({_id:userId},{
+        isBlocked:true
+    })
+    return result
+
+}
 
 
 export const userService = {
     registerIntoDB,
     loginIntoDB,
     getAllUserFrom,
-    getSingleUserFromBd
+    getSingleUserFromBd,
+    changePasswordIntoBd,
+    isblockedfromBD 
 }

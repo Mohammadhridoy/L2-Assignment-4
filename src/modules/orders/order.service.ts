@@ -127,6 +127,18 @@ const getAllOrderDatafromBD = async() =>{
 }
 
 
+// get single user All Order info from BD 
+const getSingleUserAllOrdes = async(email:string)=>{
+
+    const allOrders = await OrderModel.find({email:email, status:"Paid" })
+
+   
+    return allOrders
+
+    
+}
+
+
 const getOrderRevenueFromDB = async() =>{
 
     const result = await OrderModel.aggregate([
@@ -149,9 +161,11 @@ const getOrderRevenueFromDB = async() =>{
 
 
 
+
 export const orderService = {
     createOrderIntoDB,
     getOrderRevenueFromDB,
     verifyPayment,
-    getAllOrderDatafromBD
+    getAllOrderDatafromBD,
+    getSingleUserAllOrdes
 }
