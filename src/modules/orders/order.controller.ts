@@ -55,7 +55,7 @@ const getOrderRevenue = async (req: Request, res: Response) =>{
 }
 
 // verifypayment 
-const verifyPayment = catchAsync(async(req, res)=>{
+const verifyPayment = catchAsync(async(req:Request, res:Response)=>{
     const order = await orderService.verifyPayment(req.query.order_id as string)
 
     sendResponse(res, {
@@ -68,7 +68,7 @@ const verifyPayment = catchAsync(async(req, res)=>{
 
 
 // get All order info........
-const getAllOrder = catchAsync(async(req, res)=>{
+const getAllOrder = catchAsync(async(req:Request, res:Response)=>{
     const allOrderData = await orderService.getAllOrderDatafromBD()
 
     sendResponse(res, {
@@ -81,7 +81,7 @@ const getAllOrder = catchAsync(async(req, res)=>{
 
 
 // get single user All Order info
-const getSingleUserAllOrderInfo = catchAsync(async(req, res)=>{
+const getSingleUserAllOrderInfo = catchAsync(async(req:Request, res:Response)=>{
     
     const email = req.params.email
     const userAllorderInfo = await orderService.getSingleUserAllOrdes(email)
@@ -94,10 +94,26 @@ const getSingleUserAllOrderInfo = catchAsync(async(req, res)=>{
 })
 
 
+
+const updateOrderStatus= catchAsync(async(req:Request, res:Response)=>{
+
+    const updateData = req.body
+
+    const result = await orderService.updateOrderstatusIntoDB(updateData) 
+
+    sendResponse(res, {
+        statusCode:StatusCodes.OK,
+        message:"Order status updated!",
+        data: result
+    })
+})
+
+
 export const orderControllers ={
     createOrder,
     getOrderRevenue,
     verifyPayment,
     getAllOrder,
-    getSingleUserAllOrderInfo
+    getSingleUserAllOrderInfo,
+    updateOrderStatus
 }

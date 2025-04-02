@@ -160,6 +160,24 @@ const getOrderRevenueFromDB = async() =>{
 }
 
 
+// update 
+
+type TupdateData = {
+    orderStatus: string,
+    orderId:string,
+}
+
+const updateOrderstatusIntoDB = async(updateData:TupdateData ) =>{
+    
+
+    const result = await OrderModel.findByIdAndUpdate({_id:updateData?.orderId}, {
+        orderStatus:updateData?.orderStatus
+    })
+
+    return result
+
+}
+
 
 
 export const orderService = {
@@ -167,5 +185,6 @@ export const orderService = {
     getOrderRevenueFromDB,
     verifyPayment,
     getAllOrderDatafromBD,
-    getSingleUserAllOrdes
+    getSingleUserAllOrdes,
+    updateOrderstatusIntoDB
 }

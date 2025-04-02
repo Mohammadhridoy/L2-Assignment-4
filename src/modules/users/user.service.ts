@@ -143,6 +143,8 @@ const changePasswordIntoBd = async(userData:JwtPayload| undefined, payload:Tuser
 
 // user isblocked
 const isblockedfromBD = async(userId:string)=>{
+
+    
     
     const result = await User.findOneAndUpdate({_id:userId},{
         isBlocked:true

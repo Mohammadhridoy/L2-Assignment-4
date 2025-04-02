@@ -12,8 +12,13 @@ const orderSchema = new Schema<Order>({
     totalPrice:{type:Number, required:[true, 'please give a totalPrice']},
     status:{
         type:String,
-        enum:["pending", "paid", "Shipped", "Completed", "Cancelled"],
+        enum:["Pending", "Paid", "Shipped", "Completed", "Cancelled"],
         default:"pending"
+    },
+    orderStatus:{
+        type:String, 
+        enum:["Pending", "Processing", "Shipped" , "Delivered",],
+        default:'pending'
     },
     transaction:{
         id:{type:String},

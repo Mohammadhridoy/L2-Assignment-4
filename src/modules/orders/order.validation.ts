@@ -8,7 +8,8 @@ const orderValidationSchema = z.object({
     carId:z.string(),
     quantity: z.number(),
     totalPrice:z.number(),
-    status:z.enum(["pending","Paid" ,"Shipped", "Completed", "Cancelled"]).optional(),
+    status:z.enum(["Pending","Paid" ,"Shipped", "Completed", "Cancelled"]).optional(),
+    orderStatus:z.enum(["Pending" , "Processing", "Shipped" , "Delivered" ]).optional(),
     transaction:z.object({
         id:z.string(),
         transactionStatus:z.string(),

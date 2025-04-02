@@ -7,7 +7,8 @@ export type Order ={
     carId: string,
     quantity: number,
     totalPrice:number,
-    status?: "pending" | "Paid" | "Shipped" | "Completed" | "Cancelled"
+    status?: "Pending" | "Paid" | "Shipped" | "Completed" | "Cancelled",
+    orderStatus?:"Pending" | "Processing"| "Shipped" | "Delivered",
     transaction?:{
         id:string,
         transactionStatus:string, 
