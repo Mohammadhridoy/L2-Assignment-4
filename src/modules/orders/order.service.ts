@@ -7,6 +7,8 @@ import { Order } from "./order.interface";
 import { OrderModel } from "./order.model";
 import { orderUtils } from "./order.utils";
 import { object } from "zod";
+import AppError from "../../error/AppError";
+import { StatusCodes } from "http-status-codes";
 
 
 
@@ -170,6 +172,102 @@ type TupdateData = {
 
 const updateOrderstatusIntoDB = async(updateData:TupdateData ) =>{
     
+    const dbOrderStatus = await OrderModel.findOne({_id:updateData?.orderId})
+    console.log(dbOrderStatus?.orderStatus);
+    const currentOrderStatus = dbOrderStatus?.orderStatus
+    const requestedOrderStatus = updateData?.orderStatus
+
+
+    // pending to delivery
+    if(
+        currentOrderStatus==="Pending" && 
+        requestedOrderStatus==="Delivery"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    // pending to shipped
+    if(
+        currentOrderStatus==="Pending" && 
+        requestedOrderStatus==="Shipped"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    if(
+        currentOrderStatus==="Processing" && 
+        requestedOrderStatus ==="Pending"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    if(
+        currentOrderStatus==="Shipped" && 
+        requestedOrderStatus ==="Processing "
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    if(
+        currentOrderStatus==="Shipped" && 
+        requestedOrderStatus ==="Pending"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        ) 
+    }
+
+
+
+    if(
+        currentOrderStatus==="Delivered" && 
+        requestedOrderStatus ==="Pending"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    
+    if(
+        currentOrderStatus==="Delivered" && 
+        requestedOrderStatus ==="Shipped"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    if(
+        currentOrderStatus==="Delivered" && 
+        requestedOrderStatus ==="Processing"
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+    if(
+        currentOrderStatus === requestedOrderStatus  
+       
+    ){
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            `you can not directly change status from ${currentOrderStatus} to ${requestedOrderStatus}`
+        )
+    }
+
+
+
 
     const result = await OrderModel.findByIdAndUpdate({_id:updateData?.orderId}, {
         orderStatus:updateData?.orderStatus
