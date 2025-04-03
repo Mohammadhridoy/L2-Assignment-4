@@ -6,7 +6,7 @@ import adminRouter from './modules/Admin/admin.router'
 import globalErrorHandler from './Middlewares/globalErrorHandler'
 import { carRoutes } from './modules/cars/car.route'
 import { orderRouter } from './modules/orders/order.route'
-
+import cookieParser from 'cookie-parser'
 
 const app:Application = express()
 
@@ -14,6 +14,7 @@ const app:Application = express()
 
 // middleware 
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors({origin: 'http://localhost:5173',  credentials:true}))
 
 app.use('/api/auth', userRouter)

@@ -43,6 +43,8 @@ const auth = (...requiredRoles: TUserRole[]) =>{
                 throw new AppError(StatusCodes.FORBIDDEN, 'This user is blocked')
             }
 
+           
+
             if(requiredRoles && !requiredRoles.includes(role)){
                 throw new AppError(StatusCodes.UNAUTHORIZED, 'you are not authorized')
             }

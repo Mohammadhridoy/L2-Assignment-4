@@ -101,6 +101,21 @@ const isBlockedUser = catchAsync(async(req:Request, res:Response)=>{
 
 })
 
+// get refresh token 
+const getRefreshToken = catchAsync(async(req:Request, res:Response)=>{
+    
+    const {refreshToken} = req.cookies
+    const result = await userService.getRefreshToken(refreshToken)
+
+    sendResponse(res,{
+        statusCode:StatusCodes.OK,
+        status:true, 
+        message: "Access token retrieved successfully!",
+        data: result
+    })
+
+})
+
 
 
 export const userController = {
@@ -109,5 +124,6 @@ export const userController = {
     allUsers,
     getSingleUser,
     changePassword,
-    isBlockedUser
+    isBlockedUser,
+    getRefreshToken
 }

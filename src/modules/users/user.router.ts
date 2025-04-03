@@ -13,6 +13,7 @@ userRouter.post('/login', validateRequst(userValidation.loginValidaton),  userCo
 userRouter.get("/user", userController.allUsers)
 userRouter.get("/user/:email", userController.getSingleUser)
 userRouter.post("/user/changepassword", auth('user', 'admin'), userController.changePassword)
-userRouter.post('/user/blocked',  userController.isBlockedUser )
+userRouter.post('/user/blocked',  userController.isBlockedUser ),
+userRouter.post('/refresh-token', userController.getRefreshToken)
 
 export default userRouter; 

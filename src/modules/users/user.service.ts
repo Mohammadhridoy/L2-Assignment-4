@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 import createToken from "../../utils/auth.utils";
 import config from "../../config";
 import { JwtPayload } from "jsonwebtoken";
-
+import jwt from 'jsonwebtoken'  
 
 
 const registerIntoDB = async(payload:IUser) =>{
@@ -153,6 +153,57 @@ const isblockedfromBD = async(userId:string)=>{
 
 }
 
+//  refresh token from access token 
+const  getRefreshToken = async (token:string) =>{
+
+   
+    if(!token){
+        throw new AppError(StatusCodes.UNAUTHORIZED, "you are not authorized!")
+    }
+   
+    
+     const decoded = jwt.verify(
+        token,
+        config.jwt_refresh_secret as string,
+     ) as JwtPayload
+    
+   
+   
+    const {email } = decoded; 
+
+    const user = await User.findOne({email})
+
+    
+
+  
+
+    if(!user){
+        throw new AppError(StatusCodes.NOT_FOUND, "This user is not found")
+    }
+    
+    const userStatus = user.isBlocked
+    if(userStatus==true){
+        throw new AppError(StatusCodes.FORBIDDEN, 'This user is blocked')
+    }
+
+    const jwtpayload = {
+        email: user?.email,
+        role: user?.role
+    }
+
+
+    const  accessToken = createToken(jwtpayload, 
+        config.jwt_access_secret as string,
+          config.jwt_access_expires_in as string
+    )
+
+    return {
+        accessToken
+    }
+
+}
+
+
 
 export const userService = {
     registerIntoDB,
@@ -160,5 +211,6 @@ export const userService = {
     getAllUserFrom,
     getSingleUserFromBd,
     changePasswordIntoBd,
-    isblockedfromBD 
+    isblockedfromBD,
+    getRefreshToken 
 }

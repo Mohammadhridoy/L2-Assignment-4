@@ -173,15 +173,16 @@ type TupdateData = {
 const updateOrderstatusIntoDB = async(updateData:TupdateData ) =>{
     
     const dbOrderStatus = await OrderModel.findOne({_id:updateData?.orderId})
-    console.log(dbOrderStatus?.orderStatus);
+    
     const currentOrderStatus = dbOrderStatus?.orderStatus
     const requestedOrderStatus = updateData?.orderStatus
 
+   
 
     // pending to delivery
     if(
         currentOrderStatus==="Pending" && 
-        requestedOrderStatus==="Delivery"
+        requestedOrderStatus==="Delivered"
     ){
         throw new AppError(
             StatusCodes.BAD_REQUEST,

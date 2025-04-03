@@ -13,12 +13,12 @@ const orderSchema = new Schema<Order>({
     status:{
         type:String,
         enum:["Pending", "Paid", "Shipped", "Completed", "Cancelled"],
-        default:"pending"
+        default:"Pending"
     },
     orderStatus:{
         type:String, 
         enum:["Pending", "Processing", "Shipped" , "Delivered",],
-        default:'pending'
+        default:'Pending'
     },
     deliveryDate: {type:String},
     transaction:{
