@@ -20,6 +20,7 @@ const orderSchema = new Schema<Order>({
         enum:["Pending", "Processing", "Shipped" , "Delivered",],
         default:'pending'
     },
+    deliveryDate: {type:String},
     transaction:{
         id:{type:String},
         transactionStatus:{type:String},

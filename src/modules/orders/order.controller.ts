@@ -94,7 +94,7 @@ const getSingleUserAllOrderInfo = catchAsync(async(req:Request, res:Response)=>{
 })
 
 
-
+// updated status
 const updateOrderStatus= catchAsync(async(req:Request, res:Response)=>{
 
     const updateData = req.body
@@ -104,6 +104,34 @@ const updateOrderStatus= catchAsync(async(req:Request, res:Response)=>{
     sendResponse(res, {
         statusCode:StatusCodes.OK,
         message:"Order status updated!",
+        data: null 
+    })
+})
+
+// updated delivery Date
+const updateDate = catchAsync(async(req:Request, res:Response)=>{
+    const updateDate = req.body
+    const result  = await orderService.updatedOrderDateIntoDB(updateDate)
+
+    sendResponse(res, {
+        statusCode:StatusCodes.OK,
+        message: "Delivery Order Date updated!",
+        data:null
+    })
+})
+
+// get single order
+const getSingleOrder = catchAsync(async(req:Request, res:Response)=>{
+    const id = req.params.id
+
+
+
+    const result = await orderService.getSingeorderFromDB(id)
+
+    
+    sendResponse(res,{
+        statusCode: StatusCodes.OK,
+        message: "Get Single order Sucessfully",
         data: result
     })
 })
@@ -115,5 +143,7 @@ export const orderControllers ={
     verifyPayment,
     getAllOrder,
     getSingleUserAllOrderInfo,
-    updateOrderStatus
+    updateOrderStatus,
+    updateDate,
+    getSingleOrder
 }

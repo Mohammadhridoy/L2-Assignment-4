@@ -9,6 +9,7 @@ export type Order ={
     totalPrice:number,
     status?: "Pending" | "Paid" | "Shipped" | "Completed" | "Cancelled",
     orderStatus?:"Pending" | "Processing"| "Shipped" | "Delivered",
+    deliveryDate?: string,
     transaction?:{
         id:string,
         transactionStatus:string, 

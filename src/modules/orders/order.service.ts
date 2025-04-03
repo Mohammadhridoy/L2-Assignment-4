@@ -6,6 +6,7 @@ import { User } from "../users/user.model";
 import { Order } from "./order.interface";
 import { OrderModel } from "./order.model";
 import { orderUtils } from "./order.utils";
+import { object } from "zod";
 
 
 
@@ -160,7 +161,7 @@ const getOrderRevenueFromDB = async() =>{
 }
 
 
-// update 
+// update status 
 
 type TupdateData = {
     orderStatus: string,
@@ -178,7 +179,31 @@ const updateOrderstatusIntoDB = async(updateData:TupdateData ) =>{
 
 }
 
+// updated delivery date 
+type  TupdateInfo = {
+    orderId: string,
+    date: string
+    }
+const updatedOrderDateIntoDB = async(updateDate:TupdateInfo) =>{
+    
 
+    const updatedDate = new Date (updateDate?.date).toLocaleDateString()
+    const result = await OrderModel.findByIdAndUpdate({_id:updateDate?.orderId}, {
+        deliveryDate:updatedDate
+    })
+
+    return result
+}
+
+// get single order from database
+const getSingeorderFromDB = async(id:string) =>{
+
+    const result = await OrderModel.findOne({_id: id})
+
+   
+
+    return result
+}
 
 export const orderService = {
     createOrderIntoDB,
@@ -186,5 +211,7 @@ export const orderService = {
     verifyPayment,
     getAllOrderDatafromBD,
     getSingleUserAllOrdes,
-    updateOrderstatusIntoDB
+    updateOrderstatusIntoDB,
+    updatedOrderDateIntoDB,
+    getSingeorderFromDB 
 }
