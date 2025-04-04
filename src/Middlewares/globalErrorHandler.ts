@@ -1,4 +1,4 @@
-import { ErrorRequestHandler } from "express";
+import { ErrorRequestHandler} from "express";
 import { ZodError } from "zod";
 import { TErrorSource } from "../interface/error";
 import handlerZodError from "../error/handlerZodError";
@@ -12,7 +12,7 @@ import { StatusCodes } from "http-status-codes";
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) =>{
 
     
-    let statusCode = err.statusCode || 500;
+    let statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
     let message = err.message  // Internal Server Error
     let  errorSource: TErrorSource = [{
         path:' ',
@@ -46,13 +46,15 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) =>{
 
 
 
-    return res.status(statusCode).json({
+    res.status(statusCode).json({
         success: false,
         message,
         errorSource,
         stack: config.NODE_ENV === "development"? err?.stack : null  
         
     })
+
+ 
 
 
 }
