@@ -20,22 +20,11 @@ const updateUserStatusByAdmin = catchAsync(async(req:Request, res: Response)=>{
 })
 
 
-const deleteBlogByAdmin = catchAsync(async(req:Request, res:Response)=>{
-        const id = req.params.id
-        
-        const result = await adminService.deleteBlogAdminfromDB(id)
 
-        sendResponse(res, {
-            statusCode:StatusCodes.OK,
-            status:true ,
-            message:"Blog deleted successfully"
-        })
-
-})
 
 
 
 export const  adminController = {
     updateUserStatusByAdmin,
-    deleteBlogByAdmin
+   
 }
