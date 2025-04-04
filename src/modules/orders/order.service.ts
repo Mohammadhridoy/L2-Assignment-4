@@ -210,7 +210,7 @@ const updateOrderstatusIntoDB = async(updateData:TupdateData ) =>{
     }
     if(
         currentOrderStatus==="Shipped" && 
-        requestedOrderStatus ==="Processing "
+        requestedOrderStatus ==="Processing"
     ){
         throw new AppError(
             StatusCodes.BAD_REQUEST,
